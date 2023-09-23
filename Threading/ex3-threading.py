@@ -3,7 +3,7 @@
 we should just 
 
 '''
-
+import concurrent.futures
 import requests
 import threading
 import time
@@ -50,19 +50,10 @@ def downloadImg(imgURL):
         f.write(imgBytes)
         print(f"{imgName} was 'downloaded'")
 
-threads = []
-
-# Create and execute thread for downloading an image
-for imgURL in img_urls:
-    t = threading.Thread(target=downloadImg, args=[imgURL])
-    t.start()
-    threads.append(t)
-
-# Force main thread to wait for all of those other threads to finish before moving on
-for thread in threads:
-    thread.join()
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    # Create and execute threads for downloading the respective images
+    executor.map(downloadImg, img_urls)
 
 
 t2 = time.perf_counter()
 print(f"Took {t2-t1} second(s) for images to be downloaded")
-

@@ -37,6 +37,8 @@ Notes about threads and processes, that goes into multi-threading and processing
     1. CPU Bound Tasks: Spends most of its time waitinf for internal events (CPU intensive), then use multiprocessing.
     2. I/O bound tasks: Spend most of its time waiting for external events (user input, web scraping, waiting for data/info), then use multithreading.
 
+    NOTE: Basically it doesn't help to use threading on cpu bound tasks since those threads are still only running on one process. But with multiprocessing, we spread the work out on multiple processors. 
+
 NOTE: Misuse of threading or multiprocessing libraries may make your program slower as a result. 
     Both of these libraries do have some overhead work being done in order for these libraries to work, essentially these benefits aren't for free.
     As well as this, they may not benefit some libraries such as numpy, scipy, or tensorflow use simultaneously multi-threading and have been
